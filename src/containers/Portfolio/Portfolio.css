@@ -1,0 +1,13 @@
+.p-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    height: 100vh;
+    /* width: 100vw; */
+}
+.p-title > h1 {
+    color: rgb(255, 112, 112);
+    font-weight: bold;
+    
+}
