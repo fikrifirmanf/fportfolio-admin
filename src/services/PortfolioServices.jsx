@@ -22,3 +22,9 @@ export async function getById(id){
 export async function update(id,payload){
     return axiosClient.patch(`/portfolio/${id}`,payload).then(response => response)
 }
+export async function postRequest(payload) {
+    return await axiosClient.post(`/portfolio`, payload).then(response => response);
+  }
+export async function deleteRequest(id) {
+    return await axiosClient.delete(`/portfolio/${id}`).then(response => response);
+  }

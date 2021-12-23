@@ -1,16 +1,24 @@
-import {React, useState, } from 'react'
-import { useParams } from 'react-router-dom';
-import './Portfolio.css'
-import { useNavigate } from 'react-router-dom';
-import { postRequest } from '../../services/PortfolioServices';
+import {useState,React} from 'react'
+import { getById, update } from '../../services/PortfolioServices';
+import { useNavigate,useParams } from 'react-router-dom';
 
-
-export default function PortfolioAddForm() {
+export default function PortfolioEditForm() {
     const {id} = useParams();
-    // console.log(id)
-    const [inputs, setInputs] = useState({});
+    console.log(id)
     const navigate = useNavigate();
+    // const [post, setPost] = React.useState(null);
+    const [inputs, setInputs] = useState({});
 
+    function fetchData(){
+        getById('6056194752fd802d68cef84a').then((resp)=>{
+            setInputs(resp.data.data)
+            console.log(resp)
+                    })
+    }
+    React.useEffect(()=>{
+        fetchData()
+        // console.log(fetchPost())
+    },[])
     const handleChange = (event)=>{
         const name = event.target.name;
         const value = event.target.value;
@@ -21,7 +29,7 @@ export default function PortfolioAddForm() {
    
     const handleSubmit = (event) => {
       event.preventDefault();
-      postRequest(inputs).then(resp => {
+      update(id,inputs).then(resp => {
         if(resp.status == 201){
         navigate(-1)
             
@@ -30,6 +38,9 @@ export default function PortfolioAddForm() {
       }).catch((error)=>console.log(error))
       console.log(inputs)
     }
+    
+    // if (!inputs) return null;
+    console.log(inputs)
     return (
         <div className='container'>
             <br />

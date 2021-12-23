@@ -13,6 +13,7 @@ import Blog from '../../containers/Blog/Blog';
 import BlogAddForm from '../../containers/Blog/BlogAddForm';
 import '../Header/topbar.css'
 import PortfolioAddForm from '../../containers/Portfolio/PortfolioAddForm';
+import PortfolioEditForm from '../../containers/Portfolio/PortfolioEditForm';
 
 
 
@@ -61,6 +62,7 @@ export default function TopBar() {
                     <Route path='/portfolio' element={<Protfolio/>} />
                     <Route path='/blog/add' element={<BlogAddForm/>} />
                     <Route path='/portfolio/add' element={<PortfolioAddForm/>} />
+                    <Route path='/portfolio/edit/:id' element={<PortfolioEditForm/>} />
                     </Routes>
                 </div>
                 

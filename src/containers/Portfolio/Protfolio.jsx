@@ -1,7 +1,7 @@
 import React from 'react'
 import './Portfolio.css'
 import DataTable, {memoize} from 'react-data-table-component';
-import { getAll, getById } from '../../services/PortfolioServices';
+import { deleteRequest, getAll, getById } from '../../services/PortfolioServices';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus,faEdit,faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -25,6 +25,12 @@ const columns =  [
         wrap: true,
         maxWidth: "500px"
     },
+    {
+        name: 'Type',
+        selector: row => row.typeProject,
+        wrap: true,
+        maxWidth: "500px"
+    },
     
     {
         name: 'Action',
@@ -44,7 +50,7 @@ const columns =  [
               <div>
                   <div className='row width-500'>
                       <div className='col col-sm'>
-                          <button className="btn btn-warning" onClick={()=>navigate(`add/${record._id}`)}
+                          <button className="btn btn-warning" onClick={()=>navigate(`edit/${record._id}`)}
                               >
                              <FontAwesomeIcon icon={faEdit} />
                           </button>,
@@ -53,7 +59,7 @@ const columns =  [
                       </div>
                       <div className='col col-sm'>
                           <button className="btn btn-danger" onClick={()=> {
-                              onEdit(record.id);
+                              onDelete(record._id);
                               }}
                               >
                               <FontAwesomeIcon icon={faTrash} />
@@ -69,13 +75,24 @@ function onEdit(id){
     getById(id).then(resp=>console.log(resp))
 }
 
+function onDelete(id){
+    deleteRequest(id).then(resp =>{console.log(resp)
+    if(resp.status == 200){
+        fetchData()
+    }
+    })
+}
+
 
     const [post, setPost] = React.useState(null);
-    React.useEffect(()=>{
+    function fetchData(){
         getAll().then((resp)=>{
-setPost(resp.data.data)
-
-        })
+            setPost(resp.data.data)
+            
+                    })
+    }
+    React.useEffect(()=>{
+        fetchData()
         // console.log(fetchPost())
     },[])
     if (!post) return null;
